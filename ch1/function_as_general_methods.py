@@ -1,4 +1,4 @@
-from utilities import square, increment
+from utilities import square, increment, average, approx_eq, near, iter_improve
 
 
 def main():
@@ -8,24 +8,6 @@ def main():
     print(square_root(2))
     print(square_root(3))
     print(square_root(9))
-
-
-def average(x, y):
-    return (x + y) / 2
-
-
-def iter_improve(update, isclose, guess=1):
-    while not isclose(guess):
-        guess = update(guess)
-    return guess
-
-
-def approx_eq(x, y, tolerance=1e-5):
-    return abs(x - y) < tolerance
-
-
-def near(x, f, g):
-    return approx_eq(f(x), g(x))
 
 
 # -----------------------
