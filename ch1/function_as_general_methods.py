@@ -1,3 +1,6 @@
+from utilities import square, increment
+
+
 def main():
     print(iter_improve(gold_update, gold_test))
     print((1 + pow(5, 1 / 2)) / 2)
@@ -9,14 +12,6 @@ def main():
 
 def average(x, y):
     return (x + y) / 2
-
-
-def square(x):
-    return x * x
-
-
-def increment(x):
-    return x + 1
 
 
 def iter_improve(update, isclose, guess=1):

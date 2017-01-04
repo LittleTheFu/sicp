@@ -1,3 +1,6 @@
+from utilities import increment
+
+
 def sum_natures(n):
     total, k = 0, 1
     while k <= n:
@@ -31,10 +34,6 @@ def cube(k):
     return pow(k, 3)
 
 
-def inc(k):
-    return k + 1
-
-
 def pi_term(k):
     return 8 / (k * (k + 2))
 
@@ -50,11 +49,11 @@ def identity(k):
 
 
 def sum_natures_better(n):
-    return summatition(n, identity, inc)
+    return summatition(n, identity, increment)
 
 
 def sum_cubes_better(n):
-    return summatition(n, cube, inc)
+    return summatition(n, cube, increment)
 
 
 def sum_pi_better(n):
