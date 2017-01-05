@@ -1,15 +1,15 @@
 from operator import add, sub, mul, truediv
 
 
-def make_ternary_constraint(a, b, c, ab, bc, ca):
+def make_ternary_constraint(a, b, c, ab, cb, ca):
     def new_value():
         av, bv, cv = [connector['has_val']() for connector in (a, b, c)]
         if av and bv:
             c['set_val'](constraint, ab(a['val'], b['val']))
         elif av and cv:
             b['set_val'](constraint, ca(c['val'], a['val']))
-        elif bc and cv:
-            a['set_val'](constraint, bc(b['val'], c['val']))
+        elif bv and cv:
+            a['set_val'](constraint, cb(c['val'], b['val']))
 
     def forget_value():
         for connector in (a, b, c):
@@ -85,10 +85,9 @@ def main():
     fahreheit = make_connector('Fahreheit')
     make_converter(celsius, fahreheit)
 
-    # fahreheit['set_val']('usr', 212)
-    # fahreheit['forget']('usr')
+    fahreheit['set_val']('usr', 212)
+    fahreheit['forget']('usr')
     celsius['set_val']('usr', 25)
-
 
 if __name__ == "__main__":
     main()
