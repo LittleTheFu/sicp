@@ -127,17 +127,25 @@ type_tag.tags = {ComplexRI: 'com', ComplexMA: 'com', Rational: 'rat'}
 # ---------------------------------------------------
 
 
-# def ration_to_complex(x):
-#     return ComplexRI(x.number / x.denom, 0)
-#
-# coercions = {('rat', 'com'): ration_to_complex}
-#
-#
-# def coerce_add(x, y):
-#     tx, ty = type_tag(x), type_tag(y)
-#     if tx != ty:
-#         if(tx,ty)
+def ration_to_complex(x):
+    return ComplexRI(x.number / x.denom, 0)
 
+coercions = {('rat', 'com'): ration_to_complex}
+
+
+def coerce_add(x, y):
+    tx, ty = type_tag(x), type_tag(y)
+    if tx != ty:
+        if(tx, ty) in coercions:
+            tx, x = ty, coercions[(tx, ty)](x)
+        elif(ty, tx) in coercions:
+            ty, y = tx, coercions[(ty, tx)](y)
+        else:
+            return 'No coercions possible'
+    key = tx
+    return coerce_add.imp[key](x, y)
+
+coerce_add.imp = {'com': add_complex, 'rat': add_rational}
 # ---------------------------------------------------
 
 
@@ -159,11 +167,18 @@ def main():
     print(add_mix(c1, r1))
     print(add_mix(r1, c1))
     print(add_mix(r1, r2))
+    print('===')
 
     print(add(c1, c2))
     print(add(c1, r1))
     print(add(r1, c1))
     print(add(r1, r2))
+    print('===')
+
+    print(coerce_add(c1, c2))
+    print(coerce_add(c1, r1))
+    print(coerce_add(r1, c1))
+    print(coerce_add(r1, r2))
     print('--------------------------------------------')
 
 if __name__ == "__main__":
