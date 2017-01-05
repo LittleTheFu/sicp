@@ -33,7 +33,6 @@ def main():
     print(d('getitem', 4))
     print(d('keys'))
     print(d('values'))
-    pass
 
 if __name__ == "__main__":
     main()
