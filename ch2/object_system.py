@@ -56,7 +56,6 @@ def make_account_class():
         self['set']('balance', 0)
 
     def desposit(self, amount):
-        print(amount)
         new_balance = self['get']('balance') + amount
         self['set']('balance', new_balance)
         return self['get']('balance')
