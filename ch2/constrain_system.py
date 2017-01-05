@@ -71,7 +71,10 @@ def inform_all_except(source, message, constrains):
 
 
 def make_converter(c, f):
+    # global for debug output
+    global u, v, w, x, y
     u, v, w, x, y = [make_connector() for _ in range(5)]
+
     multiplier(c, w, u)
     multiplier(v, x, u)
     adder(v, y, f)
@@ -80,14 +83,28 @@ def make_converter(c, f):
     constant(y, 32)
 
 
+def debugPrint():
+    print('!!!!!')
+    for item in [u, v, w, x, y]:
+        print(item['val'])
+    print('!!!!!')
+
+
 def main():
     celsius = make_connector('Celsius')
     fahreheit = make_connector('Fahreheit')
     make_converter(celsius, fahreheit)
 
+    # debugPrint()
     fahreheit['set_val']('usr', 212)
+
+    # debugPrint()
     fahreheit['forget']('usr')
+
+    # debugPrint()
     celsius['set_val']('usr', 25)
+
+    # debugPrint()
 
 if __name__ == "__main__":
     main()
