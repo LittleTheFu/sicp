@@ -1,18 +1,19 @@
 from operator import getitem
 from fractions import gcd
+from pair import make_pair, getitem_pair
 
 
 def make_rat(n, d):
     g = gcd(n, d)
-    return (n // g, d // g)
+    return make_pair(n // g, d // g)
 
 
 def number(x):
-    return getitem(x, 0)
+    return getitem_pair(x, 0)
 
 
 def denom(x):
-    return getitem(x, 1)
+    return getitem_pair(x, 1)
 
 
 def str_rat(x):
