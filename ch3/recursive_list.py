@@ -1,7 +1,3 @@
-def square(n):
-    return n * n
-
-
 class Rlist(object):
 
     class EmptyList(object):
@@ -58,7 +54,7 @@ def main():
     print(len(s))
     print(s[1])
     print(extend_rlist(s.rest, s))
-    print(map_rlist(s, square))
+    print(map_rlist(s, lambda x: x * x))
     print(filter_rlist(s, lambda x: x % 2 == 1))
 
 if __name__ == "__main__":
