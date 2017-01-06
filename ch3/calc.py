@@ -12,7 +12,7 @@ class Exp(object):
         return 'Exp({0}, {1})'.format(self.operator, self.operands)
 
     def __str__(self):
-        operands_str = ', '.join(map(str, operands))
+        operands_str = ', '.join(map(str, self.operands))
         return '{0}({1})'.format(self.operator, operands_str)
 
 
@@ -44,7 +44,9 @@ def calc_apply(operator, args):
 
 def main():
     print(calc_apply('+', [1, 2, 3]))
-
+    e = Exp('add', [2, Exp('mul', [4, 6])])
+    print(e)
+    print(calc_eval(e))
 
 if __name__ == "__main__":
     main()
