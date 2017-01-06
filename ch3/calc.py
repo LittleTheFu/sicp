@@ -42,11 +42,81 @@ def calc_apply(operator, args):
         return numer / denom
 
 
+def read_eval_print_loop():
+    while True:
+        try:
+            expression_tree = calc_parse(input('calc> '))
+            print(calc_eval(expression_tree))
+        except (SyntaxError, TypeError, ZeroDivisionError) as err:
+            print(type(err).__name__ + ':', err)
+        except (KeyboardInterrupt, EOFError):
+            print('Calculation completed')
+            return
+
+
+def calc_parse(line):
+    tokens = tokenize(line)
+    expression_tree = analyze(tokens)
+    if len(tokens) > 0:
+        raise SyntaxError('Extra token(s) : ' + ' '.join(tokens))
+    return expression_tree
+
+
+def tokenize(line):
+    spaced = line.replace('(', ' ( ').replace(')', ' ) ').replace(',', ' , ')
+    return spaced.strip().split()
+
+
+def assert_not_empty(tokens):
+    if len(tokens) == 0:
+        raise SyntaxError('unexpected end of line')
+
+known_operators = ['add', 'sub', 'mul', 'div', '+', '-', '*', '/']
+
+
+def analyze(tokens):
+    assert_not_empty(tokens)
+    token = analyze_token(tokens.pop(0))
+    if type(token) in (float, int):
+        return token
+    if token in known_operators:
+        if len(tokens) == 0 or tokens.pop(0) != '(':
+            raise SyntaxError('expect ( after ' + token)
+        return Exp(token, analyze_operands(tokens))
+    else:
+        raise SyntaxError('unexpected ' + token)
+
+
+def analyze_operands(tokens):
+    assert_not_empty(tokens)
+    operands = []
+    while tokens[0] != ')':
+        if operands and tokens.pop(0) != ',':
+            raise SyntaxError('expected , ')
+        operands.append(analyze(tokens))
+        assert_not_empty(tokens)
+    tokens.pop(0)
+    return operands
+
+
+def analyze_token(token):
+    try:
+        return int(token)
+    except (TypeError, ValueError):
+        try:
+            return float(token)
+        except (TypeError, ValueError):
+            return token
+
+
 def main():
-    print(calc_apply('+', [1, 2, 3]))
-    e = Exp('add', [2, Exp('mul', [4, 6])])
-    print(e)
-    print(calc_eval(e))
+    # print(calc_apply('+', [1, 2, 3]))
+    # e = Exp('add', [2, Exp('mul', [4, 6])])
+    # print(e)
+    # print(calc_eval(e))
+    # print(tokenize('add(2, mul(4, 6))'))
+    read_eval_print_loop()
+
 
 if __name__ == "__main__":
     main()
